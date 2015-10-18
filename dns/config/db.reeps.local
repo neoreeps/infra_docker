@@ -1,0 +1,34 @@
+;
+; BIND data file for local loopback interface
+;
+$ORIGIN reeps.local.
+$TTL    604800
+;
+;
+; YOU MUST UPDATE THE GENERATION ID IF YOU CHANGE THIS FILE
+;
+@   IN  SOA infra.reeps.local. root.reeps.local. (
+                2015071706 ; generation
+                3H ; refresh
+                15 ; retry
+                1w ; expire
+                3h ; minimum
+                )
+; 
+@   IN  NS  infra ; in domain
+
+; server host definitions
+infra   IN  A       10.4.166.2 ; nameserver def
+ns      IN  CNAME   infra
+dns     IN  CNAME   infra
+dhcp    IN  CNAME   infra
+ldap    IN  CNAME   infra
+
+; vmware
+vcenter IN  A   10.4.166.10
+esx01   IN  A   10.4.166.11
+esx02   IN  A   10.4.166.12
+
+; cameras
+
+; robots

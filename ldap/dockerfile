@@ -1,0 +1,44 @@
+FROM ubuntu:14.04
+MAINTAINER Kenny Speer
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN echo "127.0.1.1 ldap.reeps.local ldap" >> /etc/hosts
+
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y slapd ldap-utils
+
+# Setup default ENV
+ENV LDAP_ROOTPASS password
+ENV LDAP_ORGANIZATION "RISE LLC"
+ENV LDAP_DOMAIN reeps.local
+
+# -1  enable all debugging
+# 0x000     no debugging
+# 0x001     trace function calls
+# 0x002     debug packet handling
+# 0x004     heavy trace debugging
+# 0x008     connection management
+# 0x010     print out packets sent and received
+# 0x020     search filter processing
+# 0x040     configuration file processing
+# 0x080     access control list processing
+# 0x100     stats log connections/operations/results
+# 0x200     stats log entries sent
+# 0x400     print communication with shell backends
+# 0x800     print entry parsing debugging
+ENV LDAP_DEBUG 0x0
+
+# cleanup
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ADD start /start
+RUN chmod 755 /start
+
+EXPOSE 389 636
+
+# finally fixup the policy script after apt-get completes
+RUN sed -i.orig 's/exit 101/exit 0/' /usr/sbin/policy-rc.d
+
+CMD ["/start"]

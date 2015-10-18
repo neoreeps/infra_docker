@@ -1,0 +1,16 @@
+FROM ubuntu:14.04
+MAINTAINER Kenny Speer
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y isc-dhcp-server
+
+# cleanup
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ADD start /start
+RUN chmod 755 /start
+
+CMD ["/start"]

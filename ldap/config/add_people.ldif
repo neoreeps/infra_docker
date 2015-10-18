@@ -1,0 +1,15 @@
+dn: uid=kenny,ou=People,dc=reeps,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectclass: shadowAccount
+uid: kenny
+sn: Speer
+givenName: Kenny
+cn: Kenny Speer
+displayName: Kenny Speer
+uidNumber: 10000
+gidNumber: 5000
+userPassword: password
+gecos: Kenny Speer
+loginShell: /bin/bash
+homeDirectory: /home/kenny

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "Starting configuration ..."
+
+cp /data/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf
+cp /data/dhcp/isc-dhcp-server /etc/default/isc-dhcp-server
+
+echo "Starting dhcpd ..."
+exec /usr/sbin/dhcpd -f

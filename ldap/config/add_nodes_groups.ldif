@@ -1,0 +1,19 @@
+dn: ou=People,dc=reeps,dc=local
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Groups,dc=reeps,dc=local
+objectClass: organizationalUnit
+ou: Groups
+
+dn: cn=Automation,ou=Groups,dc=reeps,dc=local
+objectClass: posixGroup
+objectClass: groupOfUniqueNames
+cn: Automation
+gidNumber: 5000
+
+dn: cn=Clinical,ou=Groups,dc=reeps,dc=local
+objectClass: posixGroup
+objectClass: groupOfUniqueNames
+cn: Clinical
+gidNumber: 6000

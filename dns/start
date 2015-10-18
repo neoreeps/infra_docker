@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "Starting configuration ..."
+
+echo "... ensure file ownership ..."
+chmod -R 644 /data/dns
+chown -R root:bind /data/dns
+echo "... copy files ..."
+cp /data/dns/* /etc/bind/
+
+echo "Starting named ..."
+mkdir -m 0775 -p /var/run/named
+chown root:bind /var/run/named
+touch /var/log/query.log
+chown bind /var/log/query.log
+exec /usr/sbin/named -u bind -f

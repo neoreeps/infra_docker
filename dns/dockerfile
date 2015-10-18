@@ -1,0 +1,19 @@
+FROM ubuntu:14.04
+MAINTAINER Kenny Speer
+
+ENV DEBIAN_FRONTEND noninteractive
+# must fixup the policy engine else bind9 install fails ... bug
+RUN sed -i.orig 's/exit 101/exit 0/' /usr/sbin/policy-rc.d
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y bind9 dnsutils bind9utils
+
+# cleanup
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ 
+ADD start /start
+RUN chmod 755 /start
+
+EXPOSE 53/udp
+
+CMD ["/start"]

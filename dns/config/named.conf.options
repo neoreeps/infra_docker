@@ -1,0 +1,27 @@
+// trusted clients/networks
+acl goodclients {
+    10.4.0.0/16;
+    localhost;
+    localnets;
+};
+
+options {
+    directory "/var/cache/bind";
+    
+    // Allow recursive query from local trusted networks only
+    recursion yes;
+    allow-query { goodclients; };
+
+    forwarders {
+        10.4.80.45;
+        10.4.80.47;
+    };
+
+    // fixup dns sec
+    dnssec-enable yes;
+    dnssec-validation yes;
+
+    auth-nxdomain no;    # conform to RFC1035
+    listen-on-v6 { any; };
+};
+
